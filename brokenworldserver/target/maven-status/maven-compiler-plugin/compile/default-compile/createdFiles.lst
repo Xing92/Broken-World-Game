@@ -1,0 +1,5 @@
+xing\brokenworldserver\App.class
+xing\brokenworldserver\model\User.class
+xing\brokenworldserver\model\Kingdom.class
+xing\brokenworldserver\utils\HibernateUtils.class
+xing\brokenworldserver\model\Attack.class

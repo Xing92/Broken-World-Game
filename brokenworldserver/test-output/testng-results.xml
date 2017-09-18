@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="5" passed="5">
+  <reporter-output>
+  </reporter-output>
+  <suite name="My First TestNG test" duration-ms="7804" started-at="2017-09-17T12:06:36Z" finished-at="2017-09-17T12:06:44Z">
+    <groups>
+    </groups>
+    <test name="Hello Test!" duration-ms="2467" started-at="2017-09-17T12:06:36Z" finished-at="2017-09-17T12:06:39Z">
+      <class name="xing.brokenworldserver.SimpleModelTest">
+        <test-method status="PASS" signature="firstTest()[pri:0, instance:xing.brokenworldserver.SimpleModelTest@7ac7a4e4]" name="firstTest" duration-ms="16" started-at="2017-09-17T14:06:36Z" finished-at="2017-09-17T14:06:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- firstTest -->
+        <test-method status="PASS" signature="secondTest()[pri:0, instance:xing.brokenworldserver.SimpleModelTest@7ac7a4e4]" name="secondTest" duration-ms="0" started-at="2017-09-17T14:06:36Z" finished-at="2017-09-17T14:06:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- secondTest -->
+      </class> <!-- xing.brokenworldserver.SimpleModelTest -->
+      <class name="xing.brokenworldserver.UtilsTest">
+        <test-method status="PASS" signature="getFactoryTest()[pri:0, instance:xing.brokenworldserver.UtilsTest@5f375618]" name="getFactoryTest" duration-ms="2327" started-at="2017-09-17T14:06:36Z" finished-at="2017-09-17T14:06:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getFactoryTest -->
+        <test-method status="PASS" signature="getSessionTest()[pri:0, instance:xing.brokenworldserver.UtilsTest@5f375618]" name="getSessionTest" duration-ms="109" started-at="2017-09-17T14:06:39Z" finished-at="2017-09-17T14:06:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getSessionTest -->
+      </class> <!-- xing.brokenworldserver.UtilsTest -->
+    </test> <!-- Hello Test! -->
+    <test name="Database Test" duration-ms="5305" started-at="2017-09-17T12:06:39Z" finished-at="2017-09-17T12:06:44Z">
+      <class name="xing.brokenworldserver.DatabaseTest">
+        <test-method status="PASS" signature="prepareDatabase()[pri:0, instance:xing.brokenworldserver.DatabaseTest@28feb3fa]" name="prepareDatabase" is-config="true" duration-ms="125" started-at="2017-09-17T14:06:39Z" finished-at="2017-09-17T14:06:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prepareDatabase -->
+        <test-method status="PASS" signature="fisrtTest()[pri:0, instance:xing.brokenworldserver.DatabaseTest@28feb3fa]" name="fisrtTest" duration-ms="5180" started-at="2017-09-17T14:06:39Z" finished-at="2017-09-17T14:06:44Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- fisrtTest -->
+      </class> <!-- xing.brokenworldserver.DatabaseTest -->
+    </test> <!-- Database Test -->
+  </suite> <!-- My First TestNG test -->
+</testng-results>
