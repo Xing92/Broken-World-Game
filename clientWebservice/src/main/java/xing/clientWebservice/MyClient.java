@@ -9,7 +9,7 @@ public class MyClient extends WebServiceGatewaySupport{
 
 		RestTemplate restTemplate = new RestTemplate();
 		User user = restTemplate.getForEntity("HTTP://localhost:8080/user", User.class).getBody();
-		System.out.println("User: " + user.getKingdoms().get(0).getUser());
+		System.out.println("User: " + user.getKingdoms().get(0).getUser().getKingdoms().get(0).getName());
 	}
 	
 	public static void main(String[] args){

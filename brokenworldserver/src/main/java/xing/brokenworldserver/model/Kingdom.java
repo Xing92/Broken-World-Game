@@ -10,22 +10,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.mapping.ForeignKey;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity
 @Table(name = "kingdom")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Kingdom {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-    @JsonManagedReference
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL, CascadeType.REFRESH})
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//	@JsonBackReference
 	private User user;
 	@OneToOne(fetch = FetchType.EAGER)
 	private Move move;

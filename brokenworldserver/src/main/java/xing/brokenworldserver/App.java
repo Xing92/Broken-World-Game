@@ -25,7 +25,7 @@ public class App {
 		// prepare1();
 		// }
 		// HibernateUtils.getFactory().close();
-		test1();
+		// test1();
 		// retreive1();
 		// startDaily(5);
 
@@ -33,10 +33,10 @@ public class App {
 
 	private static void test1() {
 		List<Attack> attacks;
-//		attack = HibernateUtils.getSession().get(Attack.class, 6);
+		// attack = HibernateUtils.getSession().get(Attack.class, 6);
 		attacks = HibernateUtils.getSession().createCriteria(Attack.class).list();
-//		System.out.println("===========" + attack.getDestination().getId());
-		for(Attack attack : attacks){
+		// System.out.println("===========" + attack.getDestination().getId());
+		for (Attack attack : attacks) {
 			System.out.println("===========" + attack.getDestination().getId());
 		}
 		HibernateUtils.getSession().close();

@@ -12,10 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "user")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class User {
 
 	@Id
@@ -26,7 +28,7 @@ public class User {
 	private String password;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonManagedReference
+//    @JsonManagedReference
 	private List<Kingdom> kingdoms = new ArrayList<Kingdom>();
 
 	public int getId() {

@@ -10,21 +10,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.mapping.ForeignKey;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "kingdom")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Kingdom {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-    @JsonManagedReference
-	@ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL, CascadeType.REFRESH })
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//	@JsonBackReference
 	private User user;
 	@OneToOne(fetch = FetchType.EAGER)
 	private Move move;
@@ -96,8 +95,7 @@ public class Kingdom {
 	}
 
 	public void incrementDefendsLost() {
-		this.defendsLost++;
-		;
+		this.defendsLost++;;
 	}
 
 	public int getLand() {
@@ -107,8 +105,8 @@ public class Kingdom {
 	public void setLand(int land) {
 		this.land = land;
 	}
-
-	public void changeLand(int land) {
+	
+	public void changeLand(int land){
 		this.land += land;
 	}
 
@@ -135,12 +133,12 @@ public class Kingdom {
 	public void setMiners(int miners) {
 		this.miners = miners;
 	}
-
-	public void changeMiners(int miners) {
+	
+	public void changeMiners(int miners){
 		this.miners += miners;
 	}
-
-	public void changeArmy(int army) {
+	
+	public void changeArmy(int army){
 		this.army += army;
 	}
 
@@ -150,8 +148,10 @@ public class Kingdom {
 
 	public void setMove(Move move) {
 		this.move = move;
-		if (move != null)
-			move.setKingdom(this);
+		if(move != null)
+		move.setKingdom(this);
 	}
+	
+	
 
 }
