@@ -12,32 +12,29 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<body>
-	<p th:text="'Hello, ' + ${username} + '!'" />
-	<p th:text="'Your password is ' + ${password} + '!'" />
-	<p th:text="'Your first kingdom is ' + ${kingdom} + '!'" />
 
-	<div class="col-sm-2" />
+
+<body>
+
+	<div class="col-sm-2"/>
 
 	<div class="col-sm-8">
-<!-- 		<div th:if="${not #lists.isEmpty(tests)}"> -->
-			<h2>List of Kingdoms</h2>
+		<div th:if="${not #lists.isEmpty(tests)}">
+			<h2>Counts List</h2>
 			<table class="table table-striped">
 				<tr>
+					<th>Id</th>
 					<th>Name</th>
-					<th>Race</th>
-					<th>Can move</th>
 				</tr>
-				<tr th:each="kingdom : ${kingdoms}">
-					<td th:text="${kingdom.name}"></td>
-					<td th:text="${kingdom.race}"></td>
-					<td th:text="${kingdom.canMove()}"></td>
+				<tr th:each="test : ${tests}">
+					<td th:text="${test}"></td>
+					<td th:text="${test}"></td>
 				</tr>
 			</table>
-<!-- 		</div> -->
+		</div>
 	</div>
-
-	<div class="col-sm-2" />
+	
+	<div class="col-sm-2"/>
 
 </body>
 </html>

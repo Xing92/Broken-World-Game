@@ -152,6 +152,9 @@ public class Kingdom {
 		move.setKingdom(this);
 	}
 	
+	public boolean canMove(){
+		return move==null ? true : false;
+	}
 	
 
 }

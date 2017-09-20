@@ -62,8 +62,8 @@ public class SimpleController {
 
 			System.out.println("login: " + login);
 			System.out.println("password: " + password);
-			query.select(root).where(builder.and(builder.equal(root.get("login"), login),
-					builder.equal(root.get("password"), password)));
+			query.select(root).where(builder.and(builder.equal(root.get("login"), "xing"),
+					builder.equal(root.get("password"), "asd123")));
 
 			user = HibernateUtils.getSession().createQuery(query).getSingleResult();
 		} finally {
