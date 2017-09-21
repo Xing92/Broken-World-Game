@@ -1,5 +1,6 @@
-package xing.clientWebservice;
+package xing.clientWebservice.controller;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import xing.clientWebservice.model.User;
 
 @Controller
 @SpringBootApplication
@@ -43,34 +47,31 @@ public class ClientSpringBoot {
 	// return "userdetails";
 	// }
 
-	@RequestMapping(value = "/userdetails", method = RequestMethod.POST)
-	public String postUserdetails(String username, String password, Model model) {
-		model.addAttribute("username", username);
+	@RequestMapping(value = "/userdetails", method = RequestMethod.GET)
+	public String getUserDetails(String login, String password, Model model) {
+		model.addAttribute("login", login);
 		model.addAttribute("password", password);
-		System.out.println("POST");
-		System.out.println(username);
-		System.out.println(password);
 
-		User user = getUserDetails(username, password);
-		System.out.println("XING: " + user.getKingdoms().get(0).getName());
-		model.addAttribute("kingdom", user.getKingdoms().get(0).getName());
-		model.addAttribute("kingdoms", user.getKingdoms());
-		
+		User user = getUserDetails(login, password);
+		if (!user.getKingdoms().isEmpty()) {
+			model.addAttribute("kingdoms", user.getKingdoms());
+		}
+
 		return "userdetails";
 	}
 
-	public static User getUserDetails(String username, String password) {
+	public static User getUserDetails(String login, String password) {
 
 		RestTemplate restTemplate = new RestTemplate();
 		Map<String, String> variables = new HashMap<String, String>();
-		variables.put("login", username);
+		variables.put("login", login);
 		variables.put("password", password);
-		System.out.println("var: " + variables.get("login"));
-//		User user = restTemplate.getForObject("HTTP://localhost:8080/userdetails", User.class, username, password);
-		User user = restTemplate.getForObject("HTTP://localhost:8080/userdetails", User.class, variables);
-//		User user = restTemplate.getForEntity("HTTP://localhost:8080/userdetails", User.class).getBody();
-		System.out.println("User: " + user.getName());
-		
+
+		URI uri = UriComponentsBuilder.fromHttpUrl("HTTP://localhost:8080/userdetails").queryParam("login", login)
+				.queryParam("password", password).build().encode().toUri();
+
+		User user = restTemplate.getForObject(uri, User.class);
+
 		return user;
 	}
 
@@ -79,17 +80,31 @@ public class ClientSpringBoot {
 
 		return "bootstrap/mainpage";
 	}
-	
+
 	@RequestMapping(value = "/testtable", method = RequestMethod.GET)
 	public String getTesttable(Model model) {
-		
+
 		List<String> tests = new ArrayList<>();
 		tests.add("A1");
 		tests.add("B2");
-		
+
 		model.addAttribute("tests", tests);
 
 		return "testtable";
 	}
-	
+
+	@RequestMapping(value = "/usercreate", method = RequestMethod.POST)
+	public String postUserCreate(String login, String password, String name, Model model) {
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		User userRequest = new User();
+		userRequest.setLogin(login);
+		userRequest.setPassword(password);
+		userRequest.setName(name);
+
+		User user = restTemplate.postForObject("HTTP://localhost:8080/usercreate", userRequest, User.class);
+		return "greetings";
+	}
+
 }

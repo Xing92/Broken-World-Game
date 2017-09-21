@@ -15,13 +15,13 @@
 <body>
 	<p th:text="'Hello, ' + ${username} + '!'" />
 	<p th:text="'Your password is ' + ${password} + '!'" />
-	<p th:text="'Your first kingdom is ' + ${kingdom} + '!'" />
 
 	<div class="col-sm-2" />
 
 	<div class="col-sm-8">
-<!-- 		<div th:if="${not #lists.isEmpty(tests)}"> -->
-			<h2>List of Kingdoms</h2>
+		<!-- 		<div th:if="${not #lists.isEmpty(tests)}"> -->
+		<h2>List of Kingdoms</h2>
+		<div th:if="${not #lists.isEmpty(kingdoms)}">
 			<table class="table table-striped">
 				<tr>
 					<th>Name</th>
@@ -34,7 +34,8 @@
 					<td th:text="${kingdom.canMove()}"></td>
 				</tr>
 			</table>
-<!-- 		</div> -->
+		</div>
+		<!-- 		</div> -->
 	</div>
 
 	<div class="col-sm-2" />

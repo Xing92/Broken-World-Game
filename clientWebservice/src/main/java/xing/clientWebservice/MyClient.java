@@ -3,6 +3,8 @@ package xing.clientWebservice;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
+import xing.clientWebservice.model.User;
+
 public class MyClient extends WebServiceGatewaySupport{
 
 	public static void getResponse(){

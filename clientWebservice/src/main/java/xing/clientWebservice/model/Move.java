@@ -1,4 +1,4 @@
-package xing.clientWebservice;
+package xing.clientWebservice.model;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

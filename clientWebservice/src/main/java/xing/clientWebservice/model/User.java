@@ -1,4 +1,4 @@
-package xing.clientWebservice;
+package xing.clientWebservice.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,17 +3,42 @@
 <head>
 <title>Home page</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<p th:text="'Hello, ' + ${name} + '!'" />
 
-	<form action="/userdetails" method="POST">
-		Username:<br /> <input type="text" name="username" value="username" />
-		<br />Password:<br /> <input type="text" name="password"
-			value="password" /> <br /> <br /> <input type="submit"
-			value="Submit" />
-	</form>
+	<br />
+	<br />
 
-	<a href="https://www.w3schools.com">This is a link</a>
+	<div class="col-sm-1" />
+	<div class="col-sm-5">
+		<h2>Log in</h2>
+		<form action="/userdetails" method="GET">
+			Login:<br /> <input type="text" name="login" value="login" /> <br />Password:<br />
+			<input type="text" name="password" value="password" /> <br /> <br />
+			<input type="submit" value="Login" />
+		</form>
+	</div>
+
+	<div class="col-sm-5">
+		<h2>Sign in</h2>
+		<form action="/usercreate" method="POST">
+			Username :<br /> <input type="text" name="name" value="name" /> <br />Login:<br />
+			<input type="text" name="login" value="login" /><br />Password:<br />
+			<input type="text" name="password" value="password" /> <br /> <br />
+			<input type="submit" value="Create" />
+		</form>
+	</div>
+
+	<div class="col-sm-1" />
+
 </body>
 </html>
