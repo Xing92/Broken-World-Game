@@ -2,10 +2,6 @@ package xing.brokenworldserver.controller;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +9,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import xing.brokenworld_requests.request.CreateUserRequest;
+import xing.brokenworld_requests.request.LoginUserRequest;
+import xing.brokenworld_requests.response.GenericResponse;
+import xing.brokenworld_requests.response.LoginUserResponse;
 import xing.brokenworldserver.dao.SimpleDao;
 import xing.brokenworldserver.model.Kingdom;
 import xing.brokenworldserver.model.User;
+import xing.brokenworldserver.service.UserService;
 import xing.brokenworldserver.utils.HibernateUtils;
 
 @RestController
@@ -57,12 +58,24 @@ public class SimpleController {
 	}
 
 	@RequestMapping(value = "/usercreate", method = RequestMethod.POST)
-	public boolean postCreateUser(@RequestBody User requestUser) {
+	public GenericResponse postCreateUser(@RequestBody CreateUserRequest createUserRequest) {
 
 		SimpleDao sd = new SimpleDao();
-		boolean isUserCreated = sd.createUser(requestUser.getName(), requestUser.getLogin(), requestUser.getPassword());
+		boolean isUserCreated = sd.createUser(createUserRequest.getUsername(), createUserRequest.getLogin(),
+				createUserRequest.getPassword());
 
-		return isUserCreated;
+		GenericResponse response = new GenericResponse();
+		response.setOk(isUserCreated);
+
+		return response;
+	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public GenericResponse getLogin(@RequestBody LoginUserRequest loginUserRequest) {
+
+		LoginUserResponse loginUserResponse = new UserService().loginUser(loginUserRequest.getLogin(), loginUserRequest.getPassword());
+
+		return loginUserResponse;
 	}
 
 }

@@ -10,12 +10,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import xing.brokenworld_requests.request.CreateUserRequest;
+import xing.brokenworld_requests.request.LoginUserRequest;
+import xing.brokenworld_requests.response.GenericResponse;
+import xing.brokenworld_requests.response.LoginUserResponse;
 import xing.clientWebservice.model.User;
 
 @Controller
@@ -28,24 +34,10 @@ public class ClientSpringBoot {
 	@RequestMapping(value = "/greetings", method = RequestMethod.GET)
 	public String greetings(@RequestParam(value = "name", required = false, defaultValue = "Stranger") String name,
 			Model model) {
-		model.addAttribute("name", name);
+		model.addAttribute("loggedUsername", name);
 
 		return "greetings";
 	}
-
-	// @RequestMapping(value = "/userdetails", method = RequestMethod.GET)
-	// public String getUserdetails(
-	// @RequestParam(value = "username", required = false, defaultValue =
-	// "Stranger") String username,
-	// String password, Model model) {
-	// model.addAttribute("username", username);
-	// model.addAttribute("password", password);
-	// System.out.println("GET");
-	// System.out.println(username);
-	// System.out.println(password);
-	//
-	// return "userdetails";
-	// }
 
 	@RequestMapping(value = "/userdetails", method = RequestMethod.GET)
 	public String getUserDetails(String login, String password, Model model) {
@@ -74,11 +66,23 @@ public class ClientSpringBoot {
 
 		return user;
 	}
+	
+	public static User getUserDetails(String username) {
+
+		RestTemplate restTemplate = new RestTemplate();
+		Map<String, String> variables = new HashMap<String, String>();
+		variables.put("username", username);
+		URI uri = UriComponentsBuilder.fromHttpUrl("HTTP://localhost:8080/userdetails").queryParam("username", username).build().encode().toUri();
+
+		User user = restTemplate.getForObject(uri, User.class);
+
+		return user;
+	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getMainpage(Model model) {
 
-		return "bootstrap/mainpage";
+		return "greetings";
 	}
 
 	@RequestMapping(value = "/testtable", method = RequestMethod.GET)
@@ -95,16 +99,52 @@ public class ClientSpringBoot {
 
 	@RequestMapping(value = "/usercreate", method = RequestMethod.POST)
 	public String postUserCreate(String login, String password, String name, Model model) {
-
 		RestTemplate restTemplate = new RestTemplate();
 
-		User userRequest = new User();
-		userRequest.setLogin(login);
-		userRequest.setPassword(password);
-		userRequest.setName(name);
+		CreateUserRequest createUserRequest = new CreateUserRequest();
+		createUserRequest.setLogin(login);
+		createUserRequest.setPassword(password);
+		createUserRequest.setUsername(name);
 
-		User user = restTemplate.postForObject("HTTP://localhost:8080/usercreate", userRequest, User.class);
+		GenericResponse response = restTemplate.postForObject("HTTP://localhost:8080/usercreate", createUserRequest,
+				GenericResponse.class);
+		System.out.println("Response: " + response.isOk());
 		return "greetings";
 	}
+	
+	@RequestMapping(value = "/userlogin", method = RequestMethod.GET)
+	public String getUserlogin(String login, String password, Model model) {
+		RestTemplate restTemplate = new RestTemplate();
+
+		LoginUserRequest loginUserRequest = new LoginUserRequest(); 
+		
+		loginUserRequest.setLogin(login);
+		loginUserRequest.setPassword(password);
+		
+		LoginUserResponse loginUserResponse = restTemplate.postForObject("HTTP://localhost:8080/login", loginUserRequest,
+				LoginUserResponse.class);
+		
+		System.out.println("Response: " + loginUserResponse.isOk());
+		if(loginUserResponse.isOk()){
+			model.addAttribute("loggedUsername", loginUserResponse.getUsername());
+		}
+		else{
+			model.addAttribute("loggedUsername", "FAILED TO LOGIN!");
+		}
+		
+		return "greetings";
+	}
+	
+	@RequestMapping(value = "/user/{username}/userdetails", method = RequestMethod.GET)
+	public String getUserDetails(@PathVariable("username") String username, Model model){
+
+		User user = getUserDetails(username);
+		if (!user.getKingdoms().isEmpty()) {
+			model.addAttribute("kingdoms", user.getKingdoms());
+		}
+
+		return "userdetails";
+	}
+	
 
 }
